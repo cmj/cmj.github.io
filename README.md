@@ -1,10 +1,10 @@
 # cmj.github.io
 Dashboards
 ----------
-* [Seattle Department of Transportation](https://git.pi.gs/sdot/)
-* [Washington State Department of Transportation](https://git.pi.gs/wsdot/)
-* [Oregon Deportment of Transportation](https://git.pi.gs/odot/)
+* [Seattle Department of Transportation]()
+* [Washington State Department of Transportation]()
+* [Oregon Deportment of Transportation]()
 
 Extra
 -----
-* [Space Needle Panocam - Today](https://git.pi.gs/sn/)
+* [Space Needle Panocam - Today]()
