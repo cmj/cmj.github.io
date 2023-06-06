@@ -18,7 +18,7 @@ var ts = String(('0' + pt.getHours()).slice(-2) + dec.slice(-2) + '000');
 
 let imgSrc = [];
 for (let h = 3; h <= 22; h++) {
-  for (let m = 0; m <= 5; m++) {
+  for (let m = 0; m <= 5; m=m+2) {
     hourMin = ('0' + h).slice(-2) + m + '000';
     imgUrl = "http://d3omclagh7m7mg.cloudfront.net/assets/" + urlParent + "/" + urlTime + hourMin + "/thumbnail.jpg";
     imgSrc.push(imgUrl);
