@@ -122,7 +122,8 @@ function missingvapor() {
 
 function contact() {
 	hidestartmenu();
-	makemsgbox('You can contact me here: <a href="mailto:contact@vaporarchive.33mail.com" >contact@vaporarchive.33mail.com</a>', "Contact");
+	// credit: contact@vaporarchive.33mail.com
+  makemsgbox('You can contact me here: <a href="mailto:vw@pi.gs" >vw@pi.gs</a>', "Contact");
 }
 
 function showarchive_explorer() {
