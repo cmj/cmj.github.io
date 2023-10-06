@@ -1,5 +1,5 @@
 var wallpaper_id = 0;
-var max_wallpapers = 61;
+var max_wallpapers = 62;
 var desktop_haswindow = false;
 
 class DesktopWallpaperWindow {
