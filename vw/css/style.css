@@ -1,0 +1,75 @@
+html {
+	background: #008080;
+	
+	width: 100vw;
+	height: 100vh;
+	
+	overflow: hidden;
+}
+
+* {
+	font-family: Tahoma, Verdana, Segoe, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+	font-size: 12px;
+}
+
+button{
+	float: right;
+	-webkit-font-smoothing: none;
+    font-size: 11px;
+    font-family: Tahoma, Verdana, Segoe, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", メイリオ, Meiryo, sans-serif;
+    color: rgb(7, 7, 7);
+    border-top-color: rgb(223, 223, 223);
+    border-left-color: rgb(223, 223, 223);
+    border-right-color: rgb(128, 128, 128);
+    border-bottom-color: rgb(128, 128, 128);
+    box-shadow: rgb(0, 0, 0) 1px 1px 0px 0px;
+    text-align: center;
+    cursor: pointer;
+    background: rgb(191, 191, 191);
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    outline: none;
+    padding: 3px;
+	margin: 2px 2px 6px 4px;
+	
+	width: 70px;
+}
+
+button:active {
+	border-bottom-color: rgb(223, 223, 223);
+    border-right-color: rgb(223, 223, 223);
+    border-left-color: rgb(128, 128, 128);
+    border-top-color: rgb(128, 128, 128);
+}
+
+#element::-webkit-scrollbar { 
+    display: none; 
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+.dummy {
+	display: none;
+}
+
+.msgboxes {
+	position:fixed;
+	width: 100vw;
+	height: 100vh;
+	top:0;
+	left:0;
+}
+
+input {
+	width: 90%;
+	margin-left: 5%;
+	
+	border: 1px solid;
+	border-top-color: #808080;
+	border-left-color: #808080;
+	border-bottom-color: #fff;
+	border-right-color: #fff;
+}

@@ -1,0 +1,268 @@
+.taskbar {
+	position: fixed;
+	display: block;
+	
+	width: 100vw;
+	height: 25px;
+	
+	bottom: 0;
+	left:0;
+	
+	background: rgb(191, 191, 191);
+	
+	border-width: 1px 0 0 0;
+    border-style: solid;
+    border-image: initial;
+	border-top-color: rgb(223, 223, 223);
+	
+	z-index: 100;
+}
+
+.taskbar .time {
+	position: absolute;
+	right: 10px;
+	
+	height: 17px;
+	
+	margin-top: 2px;
+	
+	border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+	
+	border-bottom-color: rgb(223, 223, 223);
+    border-right-color: rgb(223, 223, 223);
+    border-left-color: rgb(128, 128, 128);
+    border-top-color: rgb(128, 128, 128);
+}
+
+.taskbar .time .timer {
+	padding: 8px;
+	padding-top: 2px;
+}
+
+.taskbar .startmenu {
+	position: absolute;
+	left: 2px;
+	
+	margin: 0;
+	
+	top: 0px;
+	
+	font-weight: bold;
+	
+	height: 24px;
+}
+
+.taskbar .startmenu .icon {
+	width: 16px;
+	height: 16px;
+	
+	position: absolute;
+	left: 4px;
+	top: 2px;
+}
+
+.taskbar .startmenu .text {
+	position: absolute;
+	top: 1.5px;
+	
+	font-size: 11pt;
+	
+	left: 24px;
+	margin-bottom: 5px;
+}
+
+.taskbar .coverpopup {
+	height: 25px;
+	
+	top: -1px;
+	left:0;
+	
+	background: rgb(191, 191, 191);
+	
+	width: 260px;
+}
+
+.taskbar .startdiv {
+	position: absolute;
+	bottom: 26px;
+	left: 5px;
+	
+	width: 250px;
+	height: 405px;
+	
+	bottom: -410px;
+	
+	background: rgb(191, 191, 191);
+	
+	border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+	
+	border-top-color: rgb(223, 223, 223);
+    border-left-color: rgb(223, 223, 223);
+    border-right-color: rgb(128, 128, 128);
+    border-bottom-color: rgb(128, 128, 128);
+	
+	z-index: -1;
+}
+
+.taskbar .startdiv .sideways {
+	position: absolute;
+	
+	width: 405px;
+	height: 40px;
+	
+	background: linear-gradient(90deg,#1084d0, navy);
+	
+	color: white;
+	
+	font-size: 21pt;
+	font-weight: bold;
+}
+
+.taskbar .startdiv .sideways {
+	position: absolute;
+	
+	width: 395px;
+	height: 40px;
+	
+	bottom: 182px;
+	left: -182px;
+	
+	padding-left: 10px;
+	
+	background: linear-gradient(90deg,navy,#1084d0);
+	
+	color: white;
+	
+	font-size: 21pt;
+	font-weight: bold;
+	
+	-webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+}
+
+.taskbar .startdiv .options{
+	margin-left: 40px;
+	margin-top: 5px;
+	
+	height: 350px;
+	
+	overflow-y: hidden;
+}
+
+.taskbar .startdiv .options .option {
+	display: block;
+	padding: 5px;
+	
+	vertical-align: middle;
+	
+	padding-left: 12px;
+}
+
+.taskbar .startdiv .options .option:hover {
+	background: rgb(0,0,128);
+	color: white;
+	
+	cursor: pointer;
+}
+
+.taskbar .startdiv .options .option .optiontxt {
+	position: absolute;
+	display: inline;
+	font-size: 11pt;
+	
+	width: 200px;
+	
+	left: 104px;
+	
+	margin-top: 4px;
+	
+
+	padding-bottom: 20px;
+	
+}
+
+.taskbar .startdiv .options .option .optiontxt u {
+	font-size: 12pt;
+}
+
+.taskbar .startdiv .options .bottom {
+	position: absolute;
+	display: block;
+	bottom: 0;
+	
+	width: 208px;
+	right: 1px;
+	
+	
+	border-width: 1px 0 0 0;
+    border-style: solid;
+    border-image: initial;
+	border-top-color: rgb(223, 223, 223);
+}
+
+.taskbar .startdiv .options .bottom .optiontxt {
+	left: 64px;
+}
+
+.taskbar .startdiv .options .option .icon {
+	width: 32px;
+	height: 32px;
+}
+
+.taskbar .processes {
+	display: flex;
+	
+	margin-left: 80px;
+	
+	justify-content: flex-start;
+	
+	flex-wrap: nowrap;
+}
+
+.taskbar .processes .process {
+	position: absolute;
+	
+	border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+	
+	border-top-color: rgb(223, 223, 223);
+    border-left-color: rgb(223, 223, 223);
+    border-right-color: rgb(128, 128, 128);
+    border-bottom-color: rgb(128, 128, 128);
+	
+	min-width: 100px;
+	height: 22px;
+	
+	cursor: pointer;
+}	
+
+.taskbar .processes .process .icon {
+	height: 22px;
+	width: 22px;
+	margin-left: 1px;
+	margin-right: 82px;
+}
+
+.taskbar .processes .process .processtxt {
+	display: inline;
+	position: relative;
+	top: -5px;
+	left: -72px;
+}
+
+.taskbar .slidein {
+	transition: 0.5s;
+	bottom: 26px !important;
+}
+
+.taskbar .slideout {
+	transition: 0.4s;
+	bottom: -410px;
+}

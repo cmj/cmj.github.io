@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	
+		<title>Vaporwave Archive</title>
+		
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		
+		
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/msgbox.js"></script>
+		<script type="text/javascript" src="js/taskbar.js"></script>
+		<script type='text/javascript' src='pkg/jquery.marquee.min.js'></script>
+
+
+		
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="stylesheet" type="text/css" href="css/msgbox.css">
+		<link rel="stylesheet" type="text/css" href="css/taskbar.css">
+		<link rel="stylesheet" type="text/css" href="css/slider.css">
+		<link rel="stylesheet" type="text/css" href="css/desktop.css">
+		
+		<!--APPS-->
+		
+		<!--ARCHIVE-->
+		<link rel="stylesheet" type="text/css" href="css/archive.css">
+		<script type="text/javascript" src="apps/archive/archive.js"></script>	
+		<script type="text/javascript" src="apps/archive/archive-explorer.js"></script>	
+		
+		<!-- EXTENSIONS -->
+		<script type="text/javascript" src="apps/archive/playlist-view.js"></script>	
+		
+		<!--DESKTOP WALLPAPER WINDOW-->
+		<script type="text/javascript" src="apps/desktop/desktop.js"></script>	
+
+		
+		<!-- ..::!!!!ll::''                                      
+          ??uuccccuuxxxxjj11II                                  
+        //wwQQUUUUzzrrffnnnnnn((::..^^::..                      
+  ""ccnnzzJJOO00OOwwXXuuccvvnnnnxxXXOOOOQQtt..                  
+  ^^LLqqQQCCJJYYXXQQ00CCUUYYXXccuuvv00bbmm--..                  
+    ..++ttJJppww0000ZZmmmm00UUYYYYccnnww((                      
+            ++XXqqmmZZqqZZmmZZCCUUYYzzUU||                      
+                11bbppppmmOOwwZZLLUUzzzzJJii                    
+            ..  zz88UUQQkkwwZZwwZZQQJJzzUUXX''                  
+              ``**kk''^^XXkkwwZZZZOOQQCCUUQQ11                  
+              ..bbZZ      ffddww00CCJJYYCCLLUU``                
+                >>nn        ??mmqqQQUUzzXXQQOO}}                
+                              ::XXddOOJJCCZZZZXX..              
+                                  }}ZZppOOqqmm00!!              
+                                    ""XXaaddqqmm//              
+                                        uu**ppwwXX              
+                                          zzoommOO::            
+                                          ..mmbbmm++            
+       WELCOME TO THE DIGITAL PLAZA         >>hhpp||            
+          PLEASE ENJOY YOUR STAY!             jj**uu            
+                                                0000            
+                                                ;;qq..          
+                                                ||WWrr          
+                                              !!****&&zz        
+                    WAVEPLAZA                QQ%%**ZZMMQQ..    
+                                            ;;bb//!!  llUUYY..  
+                                            ;;!!          }}}}  
+                                                            ''   -->
+		
+	</head>
+	
+	<body onload="startTime()">
+		
+		<div id="applications">
+			
+		</div>
+		
+		<div id="msgboxes">
+			<div class="msgbox" id="archive_prevplaymsg" onmousedown="$(this).css('z-index', currz); currz += 1;"  onmouseenter="$(this).draggable({handle: '.title'});" style="width: 460px;height: 153.753px; bottom: 8vh; right: 4vw;">
+					<div class="title">
+						<img src="img/waveplayer.ico" class="icon"></img>
+						<span class="text">Previously Played</span>
+						<button class="closebtn" onclick="archive_haslastplayed = false;$(this.parentElement.parentElement).hide();"></button>
+					</div>
+					
+					<div class="topbuttons">
+						<a onclick="archive_choosetrack();">►</a>
+						<div class="nextup_wrapper">
+							<span id="archive_nextup">Next Up: Loading...</span>
+						</div>
+					</div>
+					
+					<div class="innerb archive-prevplay">
+
+						<select id="archive-prevplay" size=7>
+							
+						</select>
+					</div>
+				</div>
+				
+			
+				
+				<div class="msgbox" id="archive_playlist" onmousedown="$(this).css('z-index', currz); currz += 1;"  onmouseenter="$(this).draggable({handle: '.title'});" style="width: 318px;height: 154px;right: 3vw;display:none">
+					<div class="title">
+						<img src="img/archiveexplorer.png" class="icon"></img>
+						<span class="text">Playlist Explorer</span>
+						<button class="closebtn" onclick="playlist_close()"></button>
+					</div>
+					
+					<div class="topbuttons">
+						<a onclick="archive_resetplaylist();">Discard Playlist</a> 
+					</div>
+					
+					<div class="innerb archive-prevplay archive-playlist">
+
+						<select id="archive-playlist" size=7>
+							
+						</select>
+					</div>
+				</div>
+				
+				
+		</div>
+		
+		<div class="desktop-icons" id="wallpaper">
+			<div class="desktop-icon" onclick="msggen()">
+				<img src="img/msg.png"></img>
+				<span>Message Generator</span>
+			</div>
+			
+			<div class="desktop-icon" onclick="archive()">
+				<img src="img/archiveplayer.png"></img>
+				<span>Vaporwave Archive</span>
+			</div>
+			
+			<div class="desktop-icon" onclick="showarchive_explorer()">
+				<img src="img/archiveexplorer.png"></img>
+				<span>Archive Explorer</span>
+			</div>
+			
+			<div class="desktop-icon" onclick="window.open('https://archive.org/details/vaporwave');">
+				<img src="img/archive.org.png"></img>
+				<span>Visit archive.org</span>
+			</div>
+			
+			
+
+		</div>
+		
+		<div class="taskbar">
+			<button class="startmenu" onclick="document.getElementById('startdiv').classList.add('slidein');"><img src="img/start.png" class="icon"></img><span class="text">Start</span></button>
+			
+			
+			<div class="time">
+				<span class="timer" id="clock">10:37</span>
+			</div>
+			
+			<div id="startdiv" class="startdiv slideout">
+				<span class="sideways">Vaporwave Archive</span>
+				<div class="options">
+					<a class="option" onclick="msggen();"><img src="img/msg.png" class="icon"></img><div class="optiontxt"><u>M</u>essage Generator</div></a>
+					<a class="option" onclick="archive();"><img src="img/archiveplayer.png" class="icon"></img><div class="optiontxt">Vaporwave <u>A</u>rchive</div></a>
+					<a class="option" onclick="showarchive_explorer()"><img src="img/archiveexplorer.png" class="icon"></img><div class="optiontxt">Archive <u>E</u>xplorer</div></a>
+					<a class="option" onclick="missingvapor();"><img src="img/missing.png" class="icon"></img><div class="optiontxt">M<u>i</u>ssing Vaporwave</div></a>
+					<a class="option" ><img src="img/none.png" class="icon"></img><div class="optiontxt"></div></a>
+					<a class="option" onclick="changeDesktopWallpaperWindow();"><img src="img/desktop.png" class="icon"></img><div class="optiontxt">Change <u>W</u>allpaper</div></a>
+					<a class="option" onclick="contact();"><img src="img/contact.png" class="icon"></img><div class="optiontxt"><u>C</u>ontact</div></a>
+					<a class="option" onclick="window.open('https://archive.org/details/vaporwave')"><img src="img/archive.org.png" class="icon"></img><div class="optiontxt"><u>V</u>isit archive.org</div></a>
+					<div class="bottom">
+						<a class="option" onclick="shutdown()"><img src="img/shut.png" class="icon"></img><div class="optiontxt"><u>S</u>hut down</div></a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="coverpopup">
+			
+			</div>
+		</div>
+		
+		<div id="temp" class="dummy">
+			
+		</div>
+		
+		<div class="dummy">
+		
+			<!-- MSGBOX -->
+			<div id="dummymsgbox">
+				<div class="msgbox" onmousedown="$(this).css('z-index', currz); currz += 1;" onmouseenter="$(this).draggable({handle: '.title'});" style="left: <!--X-->; top: <!--Y-->">
+					<div class="title">
+						<!--AUDIO-->
+						<img src="img/msg.png" class="icon"></img>
+						<span class="text"><!--TITLE--></span>
+						<button class="closebtn" onclick="this.parentElement.parentElement.remove();"></button>
+					</div>
+					<div class="innerb">
+						<p><!--CONTENT--></p>
+				
+						<div class="buttons">
+							<button onclick="this.parentElement.parentElement.parentElement.remove();//command2">OK</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- IFRAME -->
+			<div id="dummyiframe">
+				<div class="msgbox" onmousedown="$(this).css('z-index', currz); currz += 1;"  onmouseenter="$(this).draggable({handle: '.title'});" style="width: <!--x-->px; height: <!--y-->px;">
+					<div class="title">
+						<img src="img/neoblock.gif" class="icon"></img>
+						<span class="text"><!--TITLE--></span>
+						<button class="closebtn" onclick="this.parentElement.parentElement.remove();"></button>
+					</div>
+					<div class="innerb">
+						<iframe class="ifr" src="--URL--">
+					
+						</iframe>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Image Viewer-->
+			<div id="dummyimg">
+				<div class="msgbox" id="--ID--" onmousedown="$(this).css('z-index', currz); currz += 1;"  onmouseenter="$(this).draggable({handle: '.title'});">
+					<div class="title">
+						<img src="img/waveplayer.ico" class="icon"></img>
+						<span class="text">Cover</span>
+						<button class="closebtn" onclick="this.parentElement.parentElement.remove();"></button>
+					</div>
+					<div class="innerb">
+						<img src="--SRC--" style="width: 192px; height: 192px;"></img>
+					</div>
+				</div>
+			</div>
+			
+			<!--MESSAGE GENERATOR-->
+			<div id="dummymsggen">
+				<div class="msgbox" id="--ID--" onmousedown="$(this).css('z-index', currz); currz += 1;" style="top: 30vh; left: 20vw;" onmouseenter="$(this).draggable({handle: '.title'});" style="width: 35vw; height: 285px">
+					<div class="title">
+						<img src="img/msg.png" class="icon"></img>
+						<span class="text">Message Generator</span>
+						<button class="closebtn" onclick="this.parentElement.parentElement.remove();"></button>
+					</div>
+					<div class="innerb">
+						<p>Click "Show" to generate a messagebox!</p><br>
+						<hr>
+						<p>Message:</p><input id="msgtxt" value="This is the Message. It is very funny"></input><br><br>
+						<hr>
+						<p>Title:</p><input id="titletxt" value="Very important Message"></input>
+						<br><br>
+						<div class="buttons">
+							<button onclick="clickgeneratemsg(this);">Show</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!--DESKTOP BACKGROUND SWITCHER-->
+			<div id="dummydesktopbackgroundwindow">
+				<div class="msgbox ui-draggable" id="--ID--" onmousedown="$(this).css('z-index', currz); currz += 1;" style="top: 175px; left: 449px; z-index: 8;" onmouseenter="$(this).draggable({handle: '.title'});">
+					<div class="title ui-draggable-handle">
+						<img src="img/msg.png" class="icon">
+						<span class="text">Change Wallpaper</span>
+						<button class="closebtn" onclick="desktop_haswindow = false;this.parentElement.parentElement.remove();"></button>
+					</div>
+					
+					<div class="topbuttons">
+						<a onclick="wallpaper_about();">About</a><a onclick="wallpaper_custom();">Custom Background</a>
+					</div>
+					
+					<div class="innerb">
+						
+						
+						<p>Choose a Wallpaper</p><div class="buttons">
+							
+						<button id="wallpaper_last">&lt;</button>
+						<button id="wallpaper_number">12</button>
+						<button id="wallpaper_next">&gt;</button></div>
+					<hr>
+					<div class="buttons">
+						<button id="wallpaper_rand">Random</button>
+						<button id="wallpaper_clear">Clear</button></div>
+					</div>
+				</div>
+			</div>
+			
+			<!--ARCHIVE-->
+			<div id="dummyarchive">
+				<div class="msgbox archive" onmousedown="$(this).css('z-index', currz); currz += 1;" style="top: 30vh; left: 20vw;min-width: 520px;" onmouseenter="$(this).draggable({handle: '.title'});">
+					<div class="title">
+						<img src="img/archiveplayer.png" class="icon"/>
+						<span class="text">Vaporwave Archive</span>
+						<button class="closebtn" onclick="archive_haswindow = false;this.parentElement.parentElement.remove();"></button>
+					</div>
+					
+					<div class="topbuttons">
+						<a onclick="archive_showsettings();">Volume</a><a onclick="archive_showlastplayed();">Last Played</a><a onclick="archive_about();">About</a><a onclick="archive_haswindow = false;this.parentElement.parentElement.remove();">Exit</a>
+					</div>
+					<div class="innerb">
+					
+						
+						<img id="archive-cover" onerror="this.src = 'img/nocover.png'" onclick="makeimg(archive_cover);" src="img/nocover.png"/>
+						
+						<div class="infocontainer">
+							 <b>Now downloading...</b><br>
+							<span style="display:auto" id="artistinfo">Welcome to the Vaporwave Archive!</span>
+							<div style="display:none" data-direction='right' data-duplicated='true' class="marquee" id="artistinfo2">Welcome to the vaporwave archive</div>
+							<br><br>
+							<div class="progress">
+								<div class="progress-container">
+									<div id="archive_progress" class="progress-bar" style="width: 0%"><br></div>
+								</div>
+							</div>
+						
+							<i id="archive_timer">0:00/0:00</i>
+						</div>
+						
+						<audio id="archive_player" ontimeupdate="archive_updatetime();" onended="archive_choosetrack();"></audio>
+						
+						<div class="buttons">
+							<button onclick="archive_download()">Visit</button>
+							<button id="archive_pausebtn" onclick="archive_pause(this);">Pause</button>
+							<button onclick="archive_choosetrack();">Skip</button>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div id="dummyarchivesettings">
+				<div class="msgbox archive" id="archive-settings" onmousedown="$(this).css('z-index', currz); currz += 1;" onmouseenter="$(this).draggable({handle: '.title'});" style="right: 30vw; top:20vh;width: 400px;height: 67px;">
+					<div class="title">
+						<img src="img/msg.png" class="icon"></img>
+						<span class="text">Volume Options</span>
+						<button class="closebtn" onclick="archive_hassettings = false; this.parentElement.parentElement.remove();"></button>
+					</div>
+					<div class="innerb settings">
+						<p style="text-align: left; position: absolute; bottom: 4px;">Player Volume:</p>
+						<input style="width: 70%; margin-left: 100px" id="volumeslider" type=range value=1 oninput="archive_setvolume(this.value);"></input>
+					</div>
+				</div>
+			</div>
+			
+			<!-- ARCHIVE EXPLORER -->
+			<div id="dummyarchiveexplorer">
+				<div class="msgbox" id="archive_explorer" onmousedown="$(this).css('z-index', currz); currz += 1;"  onmouseenter="$(this).draggable({handle: '.title'});" style="width: 460px;height:auto;">
+					<div class="title">
+						<img src="img/waveplayer.ico" class="icon"></img>
+						<span class="text">Vaporwave Archive Explorer</span>
+						<button class="closebtn" onclick="archive_explorer_window = false;$(this.parentElement.parentElement).remove();"></button>
+					</div>
+					
+					<div class="topbuttons">
+						<a onclick="archive_explorer_goback();">◀</a></span><span id="archive_path">Vaporwave Archive</span>
+						
+						<div id="archive_explorer_progress_container" class="progress" style="display: inline-block;width: 317px;">
+								<div class="progress-container">
+									<div id="archive_explorer_progress" class="progress-bar" style="width: 0%"><br></div>
+								</div>
+						</div>
+						
+						<div id="archive_explorer_searchfield_container" style="display: inline-block;width: 324px;">
+							<input id="archive_explorer_searchfield" oninput="archive_explorer_fillartist(this.value);", style="width: 95%;">
+							</input>
+						</div>
+						
+					</div>
+					
+					<div class="innerb archive-explorer">
+
+						<select id="archive-exp"  onmousemove="this.selectedIndex = -1;" class="loading" size="16">
+							
+						</select>
+					</div>
+				</div>
+			</div>
+			
+			<!-- SHUTDOWN OVERLAY -->
+			<div id="dummyshutdownoverlay">
+				<div id="dummyshutdown-overlay" style="position:absolute;width:100vw;height:100vh;background-image:url('img/background_overlay.png');background-repeat:repeat;left:0px;top:0px;z-index:1000000;" onclick="close_shutdown();">
+					
+				</div>
+			</div>
+			
+		</div>	
+	</body>
+</html>
