@@ -19,7 +19,7 @@ function archive_explorer_getnames(forced = false) {
 	if (!archive_explorer_loaded && !getarchive()) {
 	
 	if (!forced) {
-		$.getJSON(archive_domain + "/vpr/artists.txt", function(ret) {
+		$.getJSON(archive_domain + "vpr/artists.txt", function(ret) {
 			Object.keys(ret).forEach(function(i){
 				alreadyloaded[i].artist = ret[i];
 			});

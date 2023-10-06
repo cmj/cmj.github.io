@@ -6,7 +6,7 @@ var archive_cover = "";
 var archive_identifier = "";
 
 var archive_domain = "";
-var getarchiveurl = archive_domain + "/vpr/newwaves.txt";
+var getarchiveurl = archive_domain + "vpr/newwaves.txt";
 
 var archive_restricted = false;
 var archive_playlist = [];
