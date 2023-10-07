@@ -22,6 +22,7 @@ var archive_volume = "100";
 
 var archive_allowmp3 = true;
 var archive_allowogg = true;
+var archive_allowflac = true;
 
 var archive_hassettings = false;
 var archive_haslastplayed = false;
@@ -154,12 +155,12 @@ function archive_choosetrack() {
 	$.getJSON(URL, function(data) {
 		var tracks = [];
 		$(jQuery.parseJSON(JSON.stringify(data["files"]))).each(function() {
-			if (this.format == "JPEG Thumb") {
+			if (this.name == "__ia_thumb.jpg") {
 				archive_cover ="https://"+data["d1"]+data["dir"]+"/"+this.name;
 				alreadyloaded[meta]['cover'] = archive_cover;
 			}
 		
-			else if ((this.format.includes("MP3") && archive_allowmp3) || (this.format.toUpperCase().includes("OGG") && archive_allowogg)) {
+			else if ((this.format.includes("MP3") && archive_allowmp3) || (this.format.toUpperCase().includes("OGG") && archive_allowogg) || (this.format.toUpperCase().includes("FLAC") && archive_allowflac)) {
 				if (!(this.artist == null || this.album == null || this.title == null)) {
 					archive_trackdata = this.artist + " - "+this.album+" - "+this.title;
 					
