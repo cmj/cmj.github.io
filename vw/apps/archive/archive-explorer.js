@@ -33,7 +33,7 @@ function archive_explorer_getnames(forced = false) {
 	
 	var n = 0;
 		archives.forEach(function (i) {
-			$.getJSON("http://archive.org/metadata/"+i+"/metadata/creator", function(data) {
+			$.getJSON("https://archive.org/metadata/"+i+"/metadata/creator", function(data) {
 				
 				if (data['result'] == undefined) {
 					alreadyloaded[i]['artist'] = "Undefined Artist";
@@ -151,7 +151,7 @@ function archive_explorer_fillalbums(val, fromartist = true) {
 	
 	
 	albums.forEach(function (i) {
-			$.getJSON("http://archive.org/metadata/"+i+"/metadata/title", function(data) {
+			$.getJSON("https://archive.org/metadata/"+i+"/metadata/title", function(data) {
 				
 				if (data['result'] == undefined) {
 					alreadyloaded[i]['album'] = "Error";
