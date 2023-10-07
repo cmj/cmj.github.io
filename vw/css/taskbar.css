@@ -114,7 +114,8 @@
 	width: 405px;
 	height: 40px;
 	
-	background: linear-gradient(90deg,#1084d0, navy);
+	/*background: linear-gradient(90deg,#1084d0, navy);*/
+	background: linear-gradient(90deg, rgb(49, 88, 113), rgb(0, 0, 35));
 	
 	color: white;
 	
@@ -133,7 +134,8 @@
 	
 	padding-left: 10px;
 	
-	background: linear-gradient(90deg,navy,#1084d0);
+	/*background: linear-gradient(90deg,navy,#1084d0);*/
+	background: linear-gradient(90deg, rgb(0, 0, 35), rgb(49, 88, 113));
 	
 	color: white;
 	
