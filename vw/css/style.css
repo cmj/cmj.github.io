@@ -1,6 +1,6 @@
 html {
 	/*background: #008080;*/
-	background: url(img/backgrounds/3.gif) no-repeat center center fixed;
+	background: url(../img/backgrounds/3.gif) no-repeat center center fixed;
 	background-size:cover;
 	
 	width: 100vw;
