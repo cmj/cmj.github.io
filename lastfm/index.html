@@ -9,7 +9,7 @@
     }
 
     body {
-      background:url(autumn_river.gif) no-repeat center center fixed;
+      /*background:url(autumn_river.gif) no-repeat center center fixed;*/
       background-size: cover;
       color: #222;
 
@@ -27,20 +27,25 @@
       justify-content: center;
       opacity:0.8;
     }
-
-    #container {
+		#outrun {
+			position: fixed;
+			right: 0;
+			bottom: 0;
+			min-width: 100%;
+			min-height: 100%;
+    	z-index: -999;
+		#container {
       position: relative;
     }
   </style>
   <body>
-    <div id="container">
+    <video autoplay muted loop id="outrun">
+			<source src="outrun.mp4" type="video/mp4">
+		</video>
+		<div id="container">
     	<object type="image/svg+xml" data="https://lastfm-recently-played.vercel.app/api?user=cmjsea&count=10&width=500"></object>
 		</div>
-  	<script src="jsbat.js"></script>
 		<!--
-		<script src="jsbat.js"></script>
-		<script src="jsbat.js"></script>
-		<script src="jsbat.js"></script>
 		<script src="jsbat.js"></script>
 		-->	
 	</body>
