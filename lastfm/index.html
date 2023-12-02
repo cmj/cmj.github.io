@@ -9,7 +9,7 @@
     }
 
     body {
-      background:url(autumn_river.gif) no-repeat center center fixed;
+      background:url(snow_signal.gif) no-repeat center center fixed;
       background-size: cover;
       color: #222;
 
@@ -28,20 +28,57 @@
       opacity:0.8;
     }
 
+    #datetime {
+	    color: #ddd;
+	    font-size: 2em;
+	    position: absolute;
+      bottom: 10px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    
     #container {
+      border-radius: 20px;
       position: relative;
-    	background: rgba(0, 0, 0, 0.5);
-		}
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .left{
+      position: absolute;
+      left: 2px;
+      padding: 5px;
+      z-index: 999;
+      justify-content: left;
+      color: white;
+    }
+    #footer {
+      position: absolute;
+      bottom: 0;
+      background: rgba(0, 0, 0);
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      opacity:0.8;
+    }
   </style>
   <body>
     <div id="container">
-    	<object type="image/svg+xml" data="https://lastfm-recently-played.vercel.app/api?user=cmjsea&count=10&loved=true&loved_style=4&border_radius=10"></object>
-		</div>
+    	<object type="image/svg+xml" data="https://lastfm-recently-played.vercel.app/api?user=cmjsea&count=10&loved=true&loved_style=4&border_radius=20"></object>
+    </div>
+    <div id="footer">
+    <span class="left">update interval: 3mins</span>
+      <div id="datetime"></div>
+    </div>
 		<!--
 		<script src="jsbat.js"></script>
-		<script src="jsbat.js"></script>
-		<script src="jsbat.js"></script>
-		<script src="jsbat.js"></script>
 		-->	
-	</body>
+    <script>
+      function updateDateTime() {
+	    const now = new Date();
+	    const currentDateTime = now.toLocaleString();
+	    document.querySelector('#datetime').textContent = currentDateTime;
+      }
+      //setInterval(updateDateTime, 1000);
+      updateDateTime();
+    </script>
+  </body>
 </html>
