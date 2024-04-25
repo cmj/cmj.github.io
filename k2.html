@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Portland - KATUcams</title>  
+  <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+  <script src="https://unpkg.com/video.js/dist/video.js"></script>
+			<script src="https://unpkg.com/browse/@videojs/http-streaming@3.10.0/dist/videojs-http-streaming.min.js"></script>
+</head>
+<body>
+  <div id="tower">
+	<h3>Sky Cam Downtown</h3>
+		<video id="standard_vid" class="video-js vjs-fluid vjs-default-skin" controls preload="auto" data-setup='{}'>
+    	<source src="https://d237lhmlzpreh2.cloudfront.net/KATUB/KATUSkyCam/m3u8/KATUB-KATUSkyCam_live.m3u8" type="application/x-mpegURL">
+  	</video>
+	</div>
+	<div id="standard">
+		<h3>The Standard</h3>
+		<video id="standard_vid" class="video-js vjs-fluid vjs-default-skin" controls preload="auto" data-setup='{}'>
+			<source src="https://d237lhmlzpreh2.cloudfront.net/KATUB/thestardard/m3u8/KATUB-TheStandard_live.m3u8" type="application/x-mpegURL">
+		</video>
+	</div>
+	<script>var player = videojs('my_video_1');player.play();</script>
+</body>
+</html>
+
