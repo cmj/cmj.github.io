@@ -15,7 +15,7 @@
 				let htmlString = '<h1>Index of /@cmj/img/</h1><hr><pre><table cellspacing="0" cellpadding="0" colspan="2"><tr><td><a href="../">../</a></td></tr><tr>';
         
         for (let file of data) {
-					htmlString += `<tr>td>[${file.type}]  </td><td><a href="${file.name}">${file.name}</a></td><td>    ${file.size}</td></tr>`;
+					htmlString += `<tr><td>[${file.type}]  </td><td><a href="${file.name}">${file.name}</a></td><td>    ${file.size}</td></tr>`;
         }
 
 				htmlString += '</table></pre><hr>';
