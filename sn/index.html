@@ -11,17 +11,20 @@ var pt = new Date(d.toLocaleString('en-US', {
 }));
 
 // https://www.spaceneedledev.com/panocam/assets/2023/03/28/2023_0328_091000/thumbnail.jpg
-urlParent = pt.getFullYear() + '/' + ('0' + (pt.getMonth() + 1)).slice(-2) + '/' + ('0' + pt.getDate()).slice(-2);
+urlParent = pt.getFullYear() + '-' + ('0' + (pt.getMonth() + 1)).slice(-2) + '-' + ('0' + pt.getDate()).slice(-2);
 urlTime = pt.getFullYear() + '_' + ('0' + (pt.getMonth() + 1)).slice(-2) + ('0' + pt.getDate()).slice(-2) + '_';
+
 var dec = String(pt.getMinutes()).slice(0, 1);
-var ts = String(('0' + pt.getHours()).slice(-2) + dec.slice(-2) + '000');
+var ts = String(('0' + pt.getHours()).slice(-2) + '-' + dec.slice(-2) + '0-00');
 
 let imgSrc = [];
 for (let h = 3; h <= 22; h++) {
   for (let m = 0; m <= 5; m=m+2) {
-    hourMin = ('0' + h).slice(-2) + m + '000';
-    imgUrl = "http://d3omclagh7m7mg.cloudfront.net/assets/" + urlParent + "/" + urlTime + hourMin + "/thumbnail.jpg";
-    imgSrc.push(imgUrl);
+    hourMin = ('0' + h).slice(-2) + '-' + m + '0-00';
+    //imgUrl = "http://d3omclagh7m7mg.cloudfront.net/assets/" + urlParent + "/" + urlTime + hourMin + "/thumbnail.jpg";
+    imgUrl = "https://storage.roundshot.com/544a1a9d451563.40343637/" + urlParent + "/" + hourMin + "/" + urlParent + "-" + hourMin + "_quarter.jpg";
+		imgSrc.push(imgUrl);
+		//alert(imgUrl);
     if (hourMin == ts) {
       break
     }
