@@ -12,18 +12,25 @@
   	align-items: center;
 		gap 5px;
 	}
+	.banner {
+		width: 1145px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 4px;
+		text-align: right;
+	}
+	pre { 
+		margin:0px;
+		padding-bottom: 5px;
+		font-size: 0.3em;
+	}
 	</style>
 </head>
 <body>
-	<div class="center"><h2>Space Needle Panocam</h2></div>
-  <div id="item" class="center"></div>
+	<div class="center"><h2>Space Needle Seattle</h2></div>
+	<div class="banner">// select image for hi-res</div>
+	<div id="item" class="center"></div>
 	<script type="text/javascript">
-		var d = new Date();
-		var pt = new Date(d.toLocaleString('en-US', {
-  		timeZone: 'America/Los_Angeles'
-		}));
-
-		// https://www.spaceneedledev.com/panocam/assets/2023/03/28/2023_0328_091000/thumbnail.jpg
 		fetch('https://spaceneedle.roundshot.com/structure.json')
 			.then(response => response.json())
 			.then(data => {
@@ -31,7 +38,10 @@
     	let elem1 = document.getElementById('item')
     	elem1.innerHTML = ""
     	for (var i = 0; i < photoArray.length; i++) {
-      	elem1.innerHTML += '<a target=\"_blank\" href=\"'+photoArray[i].structure.full3.url_full+'\"><img src=\"'+photoArray[i].structure.thumbnail.url_full+'\"></a>';
+				var utc = photoArray[i].datetime;
+				var dt = new Date(utc * 1000);
+				var d = dt.toLocaleString('en-us', {timeZone:'UTC', weekday:"long", year:"numeric", month:"short", day:"numeric", hour:"numeric", minute:"numeric"});
+				elem1.innerHTML += '<a target=\"_blank\" href=\"'+photoArray[i].structure.full3.url_full+'\"><img src=\"'+photoArray[i].structure.thumbnail.url_full+'\"></a><pre>'+d+'</pre>';
   		}
 		})
 	</script>
