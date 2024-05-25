@@ -18,47 +18,22 @@
 	<div class="center"><h2>Space Needle Panocam</h2></div>
   <div id="item" class="center"></div>
 	<script type="text/javascript">
-var d = new Date();
-var pt = new Date(d.toLocaleString('en-US', {
-  timeZone: 'America/Los_Angeles'
-}));
+		var d = new Date();
+		var pt = new Date(d.toLocaleString('en-US', {
+  		timeZone: 'America/Los_Angeles'
+		}));
 
-// https://www.spaceneedledev.com/panocam/assets/2023/03/28/2023_0328_091000/thumbnail.jpg
-urlParent = pt.getFullYear() + '-' + ('0' + (pt.getMonth() + 1)).slice(-2) + '-' + ('0' + pt.getDate()).slice(-2);
-urlTime = pt.getFullYear() + '_' + ('0' + (pt.getMonth() + 1)).slice(-2) + ('0' + pt.getDate()).slice(-2) + '_';
-
-var dec = String(pt.getMinutes()).slice(0, 1);
-var ts = String(('0' + pt.getHours()).slice(-2) + '-' + dec.slice(-2) + '0-00');
-
-let imgSrc = [];
-for (let h = 3; h <= 22; h++) {
-  for (let m = 0; m <= 5; m=m+2) {
-    hourMin = ('0' + h).slice(-2) + '-' + m + '0-00';
-    //imgUrl = "http://d3omclagh7m7mg.cloudfront.net/assets/" + urlParent + "/" + urlTime + hourMin + "/thumbnail.jpg";
-    imgUrl = "https://storage.roundshot.com/544a1a9d451563.40343637/" + urlParent + "/" + hourMin + "/" + urlParent + "-" + hourMin + "_thumbnail.jpg";
-		imgSrc.push(imgUrl);
-		//alert(imgUrl);
-    if (hourMin == ts) {
-      break
-    }
-  }
-  if (hourMin == ts) {
-    break
-  }
-}
-const revImg = []
-for (let i = imgSrc.length - 1; i >= 0; i--) {
-  const valueAtIndex = imgSrc[i]
-  revImg.push(valueAtIndex)
-}
-revImg.length = 100;
-console.log(revImg)
-var target = document.getElementById('item');
-revImg.forEach(function(revImg) {
-  var newImg = document.createElement("img");
-  newImg.src = revImg;
-	target.appendChild(newImg);
-})
-</script>
+		// https://www.spaceneedledev.com/panocam/assets/2023/03/28/2023_0328_091000/thumbnail.jpg
+		fetch('https://spaceneedle.roundshot.com/structure.json')
+			.then(response => response.json())
+			.then(data => {
+    	let photoArray = data['images'];
+    	let elem1 = document.getElementById('item')
+    	elem1.innerHTML = ""
+    	for (var i = 0; i < photoArray.length; i++) {
+      	elem1.innerHTML += '<a target=\"_blank\" href=\"'+photoArray[i].structure.full3.url_full+'\"><img src=\"'+photoArray[i].structure.thumbnail.url_full+'\"></a>';
+  		}
+		})
+	</script>
 </body>
 </html>
