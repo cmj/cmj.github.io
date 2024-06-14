@@ -1,0 +1,84 @@
+<!doctype html>
+
+<head>
+  <title>last.fm scrobbles</title>
+  <meta http-equiv="refresh" content="180">
+	<style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+			/* ../27.gif m02.gif */
+      background:url(m02.gif) no-repeat center fixed;
+      background-size: 460px 700px;
+      color: #222;
+
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+
+      margin: 0;
+      padding: 0;
+      
+      min-height: 100vh;
+      min-width: 100vw;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity:0.8;
+    }
+
+    #datetime {
+	    color: #ddd;
+	    font-size: 1.2em;
+	    position: absolute;
+      bottom: 10px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    
+    #container {
+      border-radius: 20px;
+      position: relative;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .left{
+      position: absolute;
+      left: 2px;
+      padding: 5px;
+      z-index: 999;
+      justify-content: left;
+      color: white;
+    }
+    #footer {
+      position: absolute;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      opacity:0.8;
+    }
+  </style>
+  <body>
+    <div id="container">
+    	<object type="image/svg+xml" data="https://lastfm-recently-played.vercel.app/api?user=cmjsea&count=10&loved=true&loved_style=4&border_radius=20"></object>
+    </div>
+    <div id="footer">
+      <div id="datetime"></div>
+    </div>
+		<!--
+		<script src="jsbat.js"></script>
+		-->	
+    <script>
+      function updateDateTime() {
+	    const now = new Date();
+	    const currentDateTime = now.toLocaleString();
+	    document.querySelector('#datetime').textContent = currentDateTime;
+      }
+      //setInterval(updateDateTime, 1000);
+      updateDateTime();
+    </script>
+  </body>
+</html>
