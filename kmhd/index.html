@@ -116,7 +116,8 @@
       <div id='info-inner'>
         <div class="paused" id='now-playing'>Now Playing</div>
         <div id='show'></div>
-        <br />
+        <div id='host'></div>
+				<br />
         <div id='song'><span id='artist'></span> - <span id='title'></span></div>
         <div id='release'></div>
         <br />
@@ -135,6 +136,7 @@
   let [
     player,
     show,
+		host,
     artist,
     title,
     release,
@@ -146,6 +148,7 @@
   ] = [
     'player',
     'show',
+		'host',
     'artist',
     'title',
     'release',
@@ -165,7 +168,8 @@
     for (let [k, v] of Object.entries(params)) {
       searchParams.set(k, v);
     }
-     return `https://www.opb.org/pf/api/v3/content/fetch/stream-launcher?${searchParams.toString()}`;
+    //return `http://juniper/~cmj/kmhd/stream-launcher?s=${Date.now()}`;  
+		return `https://www.opb.org/pf/api/v3/content/fetch/stream-launcher?${searchParams.toString()}&s=${Date.now()}`;
   }
 
   async function fetchPlays() {
@@ -173,7 +177,7 @@
       query: '{"site":"kmhd"}',
       d: '144',
       _website: 'opb',
-    }))
+		}))
     return res.json();
   }
 
@@ -182,11 +186,12 @@
       title: play.song.trackName || '',
       artist: play.song.artistName || '',
       artistUrl: play.song.artistViewUrl || '',
-      artworkUrl: play.song.artworkUrl100 || null,
+      artworkUrl: play.song.artworkUrl100 || '',
       program: play.program.name || '',
       release: '',
       airdate: play.song._start_time != null ? (new Date(play.song._start_time)) : null,
-      showId: play.program.name,
+      host: play.program.hosts[0].name || '', 
+      showId: play.program.name || '',
     }
     
 		metadata.airdate = new Date(play.airdate);
@@ -215,11 +220,11 @@
       fetchPlays(),
     ])
     let play = extractPlayMetadata(plays.onNow);
-    let showHeader = `${play.program}`; // with ${show.host}`;
+    let showHeader = `${play.program}`;
 
     return {
-      //program: show.program,
-      //host: show.host,
+      program: play.program,
+      host: play.host,
       artist: play.artist,
       title: play.title,
       release: play.release,
@@ -248,8 +253,9 @@
     resetButton();
 
     error.textContent = '';
-    show.textContent = `${nowPlaying.program} with ${nowPlaying.host}`;
-    artist.textContent = nowPlaying.artist;
+    show.textContent = nowPlaying.program;
+    host.textContent = nowPlaying.host;
+		artist.textContent = nowPlaying.artist;
     title.textContent = nowPlaying.title;
     release.textContent = nowPlaying.release;
     let nowPlayingText;
@@ -279,7 +285,7 @@
       })
     }
   }
-  setInterval(updateTitle, 1000 * 15);
+  setInterval(updateTitle, 1000 * 20);
   updateTitle();
 
   updateButton.onclick = updateTitle;
