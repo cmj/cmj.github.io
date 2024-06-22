@@ -1,0 +1,312 @@
+<!doctype html>
+
+<head>
+  <title>KEXP</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: black;
+      color: #EEE;
+
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+
+      margin: 0;
+      padding: 0;
+      
+      min-height: 100vh;
+      min-width: 100vw;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #container {
+      position: relative;
+    }
+
+    #bg {
+      background: url(https://upload.wikimedia.org/wikipedia/commons/4/40/KMHDwikipedia.jpg);
+			filter: blur(50px) brightness(0.5);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: black;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      
+      height: 110vh;
+      width: 110vw;
+      pointer-events: none;
+    }
+
+    #info {
+      padding: 20px;
+      border: 5px gray ridge;
+      background-color: black;
+
+      display: flex;
+      align-items: center;
+    }
+
+    #artwork {
+      width: 200px;
+      height: 200px;
+      background: url(https://upload.wikimedia.org/wikipedia/commons/4/40/KMHDwikipedia.jpg);
+      background-size: 200px 200px;
+      object-position: center;
+      margin-right: 20px;
+    }
+
+    #info-inner {
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    #now-playing {
+      text-transform: uppercase;
+      font-weight: bold;
+
+      font-size: 1rem;
+      line-height: 1.3rem;
+    }
+
+    #artist {
+      font-weight: bold;
+    }
+
+    #song {
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+    }
+
+    #release {
+      font-size: 1rem;
+      line-height: 1.3rem;
+    }
+
+    #player {
+      margin-top: 30px;
+      width: 100%;
+    }
+
+    #error {
+      color: #ffafaf;
+      font-weight: bold;
+    }
+    
+    button:disabled,
+    button[disabled]{
+      color: #EEE;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='bg'></div>
+  <div id='container'>
+    <div id='info'>
+      <img id='artwork' />
+      <div id='info-inner'>
+        <div class="paused" id='now-playing'>Now Playing</div>
+        <div id='show'></div>
+        <br />
+        <div id='song'><span id='artist'></span> - <span id='title'></span></div>
+        <div id='release'></div>
+        <br />
+        <button id='updateButton'>Update Info</button> <button id='enableNotificationsButton'>Enable Notifications</button>
+        <br />
+        <div id='error'></div>
+      </div>
+    </div>
+    <audio id='player' controls />
+  </div>
+
+<script>
+  const PLACEHOLDER_ARTWORK = 'https://upload.wikimedia.org/wikipedia/commons/4/40/KMHDwikipedia.jpg';
+  const AIR_BREAK = 'Air Break';
+
+  let [
+    player,
+    show,
+    artist,
+    title,
+    release,
+    error,
+    artwork,
+    updateButton,
+    bg,
+    enableNotificationsButton
+  ] = [
+    'player',
+    'show',
+    'artist',
+    'title',
+    'release',
+    'error',
+    'artwork',
+    'updateButton',
+    'bg',
+    'enableNotificationsButton'
+  ].map(e => document.getElementById(e));
+
+  function getStreamURL() {
+      return `https://ais-sa3.cdnstream1.com/2442_128.aac?listenerId=esTrackblock0303408&aw_0_1st.playerid=esPlayer&aw_0_1st.skey=${Date.now()}`;
+  }
+
+  function getAPIEndpoint(params = {}) {
+    let searchParams = new URLSearchParams();
+    for (let [k, v] of Object.entries(params)) {
+      searchParams.set(k, v);
+    }
+     return `https://www.opb.org/pf/api/v3/content/fetch/stream-launcher?${searchParams.toString()}`;
+  }
+
+  async function fetchPlays() {
+    let res = await fetch(getAPIEndpoint({
+      query: '{"site":"kmhd"}',
+      d: '144',
+      _website: 'opb',
+    }))
+    return res.json();
+  }
+
+  function extractPlayMetadata(play) {
+		let metadata = {
+      title: play.song.trackName || '',
+      artist: play.song.artistName || '',
+      artistUrl: play.song.artistViewUrl || '',
+      artworkUrl: play.song.artworkUrl100 || null,
+      program: play.program.name || '',
+      release: '',
+      airdate: play.song._start_time != null ? (new Date(play.song._start_time)) : null,
+      showId: play.program.name,
+    }
+    
+		metadata.airdate = new Date(play.airdate);
+    //if (['airbreak', 'Air Break', 'air break'].includes(play.play_type)) {
+    //  metadata.release = AIR_BREAK;
+    //} else {
+      metadata.release = play.song.collectionName || '';
+    //}
+
+    return metadata;
+  }
+
+  function extractShowMetadata(show) {
+    let metadata = {
+      showId: show.id,
+      host: show.host_names.join(', '),
+      program: show.program_name,
+      airdate: new Date(show.airdate),
+    }
+
+    return metadata;
+  }
+
+  async function fetchNowPlaying() {
+    let [plays] = await Promise.all([
+      fetchPlays(),
+    ])
+    let play = extractPlayMetadata(plays.onNow);
+    let showHeader = `${play.program}`; // with ${show.host}`;
+
+    return {
+      //program: show.program,
+      //host: show.host,
+      artist: play.artist,
+      title: play.title,
+      release: play.release,
+      artworkUrl: play.artworkUrl
+    }
+  }
+
+  let lastNowPlaying = null;
+  async function updateTitle() {
+    function resetButton() {
+      updateButton.disabled = false;
+      updateButton.innerText = 'Update Info';
+    }
+    
+    updateButton.disabled = true;
+    updateButton.innerText = 'Updating Info...';
+
+    let nowPlaying;
+    try {
+      nowPlaying = await fetchNowPlaying();
+    } catch (err) {
+      resetButton();
+      error.textContent('Could not fetch show data - check console');
+      return;
+    }
+    resetButton();
+
+    error.textContent = '';
+    show.textContent = `${nowPlaying.program} with ${nowPlaying.host}`;
+    artist.textContent = nowPlaying.artist;
+    title.textContent = nowPlaying.title;
+    release.textContent = nowPlaying.release;
+    let nowPlayingText;
+    if (nowPlaying.release === AIR_BREAK) {
+      song.style.visibility = 'hidden';
+      nowPlayingText = AIR_BREAK;
+    } else {
+      song.style.visibility = 'visible';
+      nowPlayingText = `${nowPlaying.artist} - ${nowPlaying.title}`;
+    }
+    let artworkUrl = nowPlaying.artworkUrl || PLACEHOLDER_ARTWORK;
+    artwork.src = artworkUrl
+    bg.style['background-image'] = `url(${artworkUrl})`;
+    
+    document.title = `KMHD: ${nowPlayingText}`;
+    if (Notification.permission === 'granted') {
+      if (lastNowPlaying === nowPlayingText) return;
+      if (lastNowPlaying === null) {
+        lastNowPlaying = nowPlayingText;
+        return;
+      }
+
+      lastNowPlaying = nowPlayingText;
+      new Notification('KEXP', {
+        body: `Now Playing: ${nowPlayingText}`,
+        icon: artworkUrl
+      })
+    }
+  }
+  setInterval(updateTitle, 1000 * 15);
+  updateTitle();
+
+  updateButton.onclick = updateTitle;
+  
+  if (Notification.permission === 'granted') {
+    enableNotificationsButton.style.display = 'none';
+  }
+  enableNotificationsButton.onclick = async () => {
+    await Notification.requestPermission();
+  }
+  
+  // every 3 hours or so, the livestream stops, so we just refresh the url every 1.5 hours
+  function refreshPlayer() {
+    player.pause()
+    player.src = getStreamURL();
+    player.play()
+  }
+  setInterval(refreshPlayer, 1000 * 60 * 60 * 1.5);
+  refreshPlayer();
+	
+	const video = document.querySelector("audio");
+	video.addEventListener("play", (event) => {
+		  console.log(
+				    "hellooooooooooooooooo",
+				  );
+	});
+
+</script>
+
+</body>
