@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Porltand OR - Average Summer Temperature</title>
+<style>
+html {
+	background-color: black;
+	color: white;
+}
+
+#graph {width: 1800px;
+	height: 800px;
+  margin-left: auto;
+  margin-right: auto;
+	text-align: center;
+	font-size: 1.5rem;
+	color: white;
+}
+</style>
+	</head>
+	<body>
+
+	<div id="graph">
+		<h3>Porltand OR - Average Summer Temperature</h3>
+		<canvas id="activity"></canvas>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-trendline/dist/chartjs-plugin-trendline.min.js"></script>
+	<script>
+    const ctx = document.getElementById('activity');
+		new Chart(ctx, {
+      type: 'line',
+			plugins: [ChartDataLabels],
+      data: {
+        labels: ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+        datasets: [{
+          label: 'TAVG',
+          lineTension: 0.5,
+          fill: false,
+          data: ['67.5435', '68.4239', '71.1848', '68.0109', '68.3587', '69.4457', '68.3043', '67.4457', '70.9239', '70.2935', '70.7283', '69.8256'],
+					backgroundColor: 'rgba(12, 123, 220, 0.5)',
+          width: 5,
+					borderColor: 'rgba(12, 123, 220, 1)',
+          borderWidth: 5,
+          trendlineLinear: {
+            colorMin: '#DC267F',
+            colorMax: '#DC267F',
+            lineStyle: 'dotted',
+            width: 5
+          }
+        }]
+      },
+      options: {
+        legend: {
+          color: 'rgba(150, 150, 255, 1)',
+					display: true,
+					font: {
+						size: 20
+					}
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        pointRadius: function(ctx) {
+          return ctx.chart.data.labels[ctx.dataIndex] === '2015' ? 20 : 3
+        },
+        scales: {
+					x: {
+						ticks: {
+							color: 'rgba(150, 150, 255, 1)',
+							font: {
+								size: 20
+							}
+						}
+					},
+					y: {
+            beginAtZero: false,
+						title: {
+              display: true,
+							color: 'rgba(255, 255, 255, .7)',
+							font: {
+								size: 30
+							},
+							text: 'Portland OR - Average Summer Temperature'
+            },
+						ticks: {
+							color: 'rgba(255, 150, 150, 0.9)',
+							font: {
+								size: 20
+							},
+						},
+						grid: {
+							color: 'rgba(255, 255, 255, 0.5)',
+						}
+          }
+        },
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+              var label = data.datasets[tooltipItem.datasetIndex].label;
+              return label + ' ' + value + '%';
+            }
+          },
+        },
+        plugins: {
+          datalabels: {
+            formatter: function(value, ctx) {
+              //return ctx.chart.data.labels[ctx.dataIndex] === '2024' ? 'Most active' : null ;
+            },
+            font: {
+              size: 18
+            },
+            align: 'bottom',
+            offset: 10,
+            color: '#FFF',
+						borderWidth: 1,
+            borderRadius: 5,
+						borderColor: '#FFF',
+            backgroundColor: 'rgba(0, 0, 0, 0.4)'
+          }
+        }
+      }
+    });
+
+  </script>
+</body>
+</html>
