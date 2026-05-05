@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gardening with Monty Don</title>
+    <script async type="text/javascript" src="https://unpkg.com/@eyevinn/web-player-component@0.8.4/dist/web-player.component.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        background-color: #000;
+        color: #fff;
+        height: 100%;
+        font-family: sans-serif;
+      }
+
+      .player-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      eyevinn-video {
+        width: 100%;
+        max-width: 960px;
+        aspect-ratio: 16 / 9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="player-container">
+      <eyevinn-video source="https://live-manifest.production-public.tubi.io/live/d91152d3-557b-4e9e-a7b9-73e0246f826d/playlist.m3u8"></eyevinn-video>
+    </div>
+  </body>
+</html>
