@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelican Brewing Beach Cam</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+      body {
+        margin: 0;
+        background-color: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      video {
+        width: 100%;
+        max-width: 1280px;
+        aspect-ratio: 16 / 9;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      }
+    </style>
+  </head>
+  <body>
+
+    <video id="video" controls autoplay muted></video>
+
+    <script>
+      const videoNode = document.getElementById('video');
+      const streamUrl = 'https://beachcam.pelicanbrewing.com/stream/53e4366f-8e2f-4252-a39d-1b4d0139db6a/channel/0/hls/live/index.m3u8';
+
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(streamUrl);
+        hls.attachMedia(videoNode);
+      } else if (videoNode.canPlayType('application/vnd.apple.mpegurl')) {
+        // Fallback for native HLS players like Safari
+        videoNode.src = streamUrl;
+      }
+    </script>
+  </body>
+</html>
