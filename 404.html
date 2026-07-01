@@ -1,0 +1,8 @@
+<!doctype html>
+<script>
+const m = location.pathname.match(/^\/t\/(\d+)\/?$/);
+
+if (m) {
+    location.replace("https://x.com/i/status/" + m[1]);
+}
+</script>
