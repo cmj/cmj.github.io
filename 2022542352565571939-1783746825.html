@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    --bg:      #191919;
+    --fg:      #FFFFFF;
+    --grey:    #8899A6;
+    --border:  #38444D;
+    --link:    #80CEFF;
+    --acc:     #2B608A;
+    --play:    #3B5F78;
+    --qt-bg:   #222222;
+    --bw-bg:   #1c1f23;
+    --bw-fg:   #5a6472;
+    --bg-hover: #22262b;
+    --accent:  #8899A6;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+}
+a { color: var(--link); text-decoration: none; }
+
+
+.tweet-row { display: flex; padding: 14px 14px 0; }
+.tweet-row:last-child { padding-bottom: 14px; }
+.left-col { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 46px; margin-right: 10px; }
+.avatar { width: 46px; height: 46px; border-radius: 23px; display: block; }
+.thread-line { width: 2px; flex: 1; min-height: 6px; background: var(--acc); margin: 3px 0; }
+.right-col { flex: 1; overflow: hidden; padding-bottom: 12px; }
+.tweet-row:last-child .right-col { padding-bottom: 0; }
+.tweet-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1px; }
+.tweet-header-left { display: flex; flex-direction: column; align-items: flex-start; flex: 1; overflow: hidden; }
+.tweet-header-left > * { margin-right: 0; }
+.fullname { font-weight: 700; font-size: 15px; white-space: nowrap; }
+.username { color: var(--accent); font-size: 14px; white-space: nowrap; padding-left: 4px; }
+.tweet-time { color: var(--accent); font-size: 14px; white-space: nowrap; flex-shrink: 0; margin-left: 8px; }
+.replying-to { color: var(--grey); font-size: 13px; margin-bottom: 3px; line-height: 1.4; }
+.tweet-content { font-size: 15px; margin: 4px 0 0; line-height: 1.3em; white-space: pre-wrap; word-wrap: break-word; }
+.focal .tweet-content { font-size: 17px; }
+.focal .tweet-date { color: var(--grey); font-size: 13px; margin-bottom: 0; padding-top: 6px; }
+.stats { display: flex; align-items: center; color: var(--grey); font-size: 13px; padding-top: 8px; }
+.stat { white-space: nowrap; margin-right: 10px; }
+.stat svg { margin: 0 1px 0 0; }
+.source { margin-left: auto; font-size: 12px; }
+.media-row { display: grid; margin: 6px 0; border-radius: 10px; overflow: hidden; gap: 3px; }
+.media-row .attachment { min-height: 0; overflow: hidden; }
+.media-row .attachment img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.media-row.single-image .attachment img { height: auto; max-height: 510px; object-fit: contain; }
+.media-grid-2x2 { display: flex; flex-direction: column; gap: 3px; margin: 6px 0; border-radius: 10px; overflow: hidden; }
+.media-grid-2x2 .grid-item { position: relative; overflow: hidden; }
+.media-grid-2x2 .grid-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.media-grid-3 { display: flex; flex-direction: column; gap: 3px; margin: 6px 0; border-radius: 10px; overflow: hidden; }
+.media-grid-3 .grid-item { position: relative; overflow: hidden; }
+.media-grid-3 .grid-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.media-grid-5 { display: flex; flex-direction: column; gap: 3px; margin: 6px 0; border-radius: 10px; overflow: hidden; }
+.media-grid-5 .grid-item { position: relative; overflow: hidden; }
+.media-grid-5 .grid-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.media-grid-5 .row-top { display: grid; gap: 3px; }
+.media-grid-5 .row-bottom { display: grid; gap: 3px; }
+.attachment img { width: 100%; display: block; }
+.video-wrap { position: relative; max-height: 510px; overflow: hidden; display: flex; justify-content: center; background: #000; }
+.video-wrap img { width: auto; height: auto; max-width: 100%; max-height: 510px; object-fit: contain; display: block; }
+.play-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.vid-duration { position: absolute; bottom: 6px; left: 8px; background: rgba(0,0,0,0.6); color: #fff; font-size: 12px; font-weight: 600; line-height: 1; padding: 3px 5px; border-radius: 4px; pointer-events: none; }
+.media-attribution { display: flex; align-items: center; gap: 6px; margin: 6px 0 4px; }
+.attr-avatar { width: 24px; height: 24px; border-radius: 50%; display: block; flex-shrink: 0; }
+.attr-name { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.quote-block { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px 10px; margin: 6px 0; background: var(--qt-bg); overflow: hidden; }
+.quote-block.has-media { padding-bottom: 0; }
+.quote-header { display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 4px; line-height: 1; }
+.quote-header > * { margin-right: 4px; }
+.quote-avatar { width: 20px; height: 20px; border-radius: 10px; display: inline-block; }
+.quote-name { font-weight: 700; font-size: 14px; margin-right: 0; }
+.quote-sn { color: var(--accent); font-size: 13px; padding-left: 4px; }
+.quote-time { color: var(--grey); font-size: 13px; margin-left: auto; }
+.quote-text { font-size: 14px; line-height: 1.3em; white-space: pre-wrap; word-wrap: break-word; }
+.quote-media { margin: 6px -12px 0; overflow: hidden; border-radius: 0 0 10px 10px; }
+.quote-media > img { width: 100%; display: block; }
+.quote-media .video-wrap { max-height: 400px; background: #000; }
+.quote-media .video-wrap img { width: auto; height: auto; max-width: 100%; max-height: 400px; object-fit: contain; }
+.quote-media .media-row { margin: 0; border-radius: 0; }
+.quote-media .media-grid-2x2 { margin: 0; border-radius: 0; }
+.quote-media .media-grid-3 { margin: 0; border-radius: 0; }
+.quote-card { margin: 6px -12px 0; overflow: hidden; border-radius: 0 0 10px 10px; }
+.quote-card .card { border: none; border-radius: 0; margin: 0; }
+/* "Quote of a quote": a smaller quote-block nested inside another one */
+.quote-block .quote-block { margin: 8px 0 0; border-radius: 8px; }
+.quote-block .quote-block .quote-avatar { width: 16px; height: 16px; border-radius: 8px; }
+.quote-block .quote-block .quote-name { font-size: 13px; }
+.quote-block .quote-block .quote-sn { font-size: 12px; }
+.quote-block .quote-block .quote-time { font-size: 12px; }
+.quote-block .quote-block .quote-text { font-size: 13px; }
+.quote-block .quote-block .quote-media { margin: 6px -10px 0; }
+.quote-block .quote-block .quote-card { margin: 6px -10px 0; }
+.quote-stub { padding: 9px 12px; }
+.quote-stub-link { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--accent); text-decoration: none; }
+.quote-stub-link:hover { text-decoration: underline; }
+.birdwatch { border: 1px solid var(--border); border-radius: 10px; margin: 6px 0; background: var(--bw-bg); overflow: hidden; }
+.birdwatch.proposed { border-style: dashed; opacity: 0.92; }
+.community-note-header { background-color: var(--bg-hover); font-weight: 700; font-size: 13px; padding: 6px 10px 8px; display: flex; align-items: center; gap: 12px; color: var(--fg); }
+.community-note-header .icon-container { flex-shrink: 0; color: var(--accent); }
+.community-note-text { font-size: 13px; color: var(--fg); white-space: pre-line; padding: 6px 10px 10px; }
+.card { border: 1px solid var(--border); border-radius: 10px; margin: 6px 0; overflow: hidden; display: flex; flex-direction: column; }
+.card-img { width: 100%; display: block; max-height: 220px; object-fit: cover; }
+.card-body { padding: 8px 12px 10px; }
+.card-domain { font-size: 12px; color: var(--grey); text-transform: uppercase; margin-bottom: 2px; }
+.card-title { font-size: 14px; font-weight: 700; line-height: 1.3; margin-bottom: 2px; }
+.card-desc { font-size: 13px; color: var(--grey); line-height: 1.4; }
+.tweet-row.focal { flex-direction: column; padding: 0; }
+.focal-header { display: flex; align-items: center; padding: 14px 14px 8px; gap: 12px; }
+.focal-header .avatar { width: 46px; height: 46px; border-radius: 23px; flex-shrink: 0; }
+.focal-header-names { display: flex; flex-direction: column; justify-content: center; line-height: 1.25; }
+.focal-header-top { display: flex; align-items: center; gap: 0; }
+.focal-header-top .fullname { font-size: 15px; font-weight: 700; }
+.focal-header-bottom { display: flex; flex-direction: column; align-items: flex-start; }
+.focal-header-bottom .username { color: var(--accent); font-size: 14px; padding-left: 0; }
+.focal-body { padding: 0 14px 14px; }
+.rt-header { display: flex; align-items: center; color: var(--grey); font-size: 13px; font-weight: 700; padding: 14px 14px 0 53px; gap: 5px; }
+.rt-header svg { flex-shrink: 0; }
+.focal-header.has-rt { padding-top: 0; }
+.top-reply-divider { height: 1px; background: var(--border); margin: 0 14px; }
+.tweet-row.top-reply { padding-top: 10px; }
+
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.thread {
+    width: 500px;
+    max-width: 100%;
+    flex-shrink: 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.45);
+}
+
+</style></head><body>
+<div class="thread"><div class="tweet-row focal">
+   <div class="focal-header">
+    <img class="avatar" src="https://pbs.twimg.com/profile_images/2019547006730207232/65lIGlDX_bigger.jpg">
+    <div class="focal-header-names">
+      <div class="focal-header-top"><span class="fullname">TNS&F 🇨🇦</span></div>
+      <div class="focal-header-bottom"><span class="username">@4Freedoms4</span></div>
+    </div>
+    <span style="margin-left:auto;align-self:flex-start;margin-top:2px;display:inline-flex;align-items:center;"><span class="tweet-time"><a href="https://nitter.net/4Freedoms4/status/2022542352565571939" style="color:inherit;text-decoration:none;">Feb 14, 2026</a></span></span>
+  </div>
+  <div class="focal-body">
+    
+    
+    <div class="tweet-content">In a world of Russias, Chinas, North Koreas, and Cubas, calling Germany and pre-Trump US "deeply authoritarian" is.... a deeply weird take.</div>
+    
+    
+    
+    <div class="quote-block" style="display:flex;align-items:center;justify-content:center;padding:16px 14px;">
+  <span style="color:#7b93a8;font-size:15px;line-height:1.4;text-align:center;"><a href="https://nitter.net/adamjohnsonCHI/status/2022510010824081708" style="color:inherit;text-decoration:none;">This tweet from @adamjohnsonCHI is unavailable.</a></span>
+</div>
+    
+    
+    <div class="tweet-date"><a href="https://nitter.net/4Freedoms4/status/2022542352565571939" style="color:inherit;text-decoration:none;">Feb 14, 2026 · 5:24 AM UTC</a></div>
+    <div class="stats">
+      <span class="stat"><svg width="13.0" height="13" viewBox="0 150 1000 850" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;flex-shrink:0"><g transform="scale(1,-1) translate(0,-850)"><path d="M1000 350q0-97-67-179t-182-130-251-48q-39 0-81 4-110-97-257-135-27-8-63-12-10-1-17 5t-10 16v1q-2 2 0 6t1 6 2 5l4 5t4 5 4 5q4 5 17 19t20 22 17 22 18 28 15 33 15 42q-88 50-138 123t-51 157q0 73 40 139t109 115 163 76 197 28q135 0 251-48t182-130 67-179z" fill="var(--grey)"/></g></svg> 19</span>
+      <span class="stat"><svg width="13.9" height="13" viewBox="0 150 1071 850" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;flex-shrink:0"><g transform="scale(1,-1) translate(0,-850)"><path d="M714 11q0-7-5-13t-13-5h-535q-5 0-8 1t-5 4-3 4-2 7 0 6v335h-107q-15 0-25 11t-11 25q0 13 8 23l179 214q11 12 27 12t28-12l178-214q9-10 9-23 0-15-11-25t-25-11h-107v-214h321q9 0 14-6l89-108q4-5 4-11z m357 232q0-13-8-23l-178-214q-12-13-28-13t-27 13l-179 214q-8 10-8 23 0 14 11 25t25 11h107v214h-322q-9 0-14 7l-89 107q-4 5-4 11 0 7 5 12t13 6h536q4 0 7-1t5-4 3-5 2-6 1-7v-334h107q14 0 25-11t10-25z" fill="var(--grey)"/></g></svg> 0</span>
+      <span class="stat"><svg width="12.1" height="13" viewBox="0 150 928 850" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;flex-shrink:0"><g transform="scale(1,-1) translate(0,-850)"><path d="M18 685l335 0 0-334q0-140-98-238t-237-97l0 111q92 0 158 65t65 159l-223 0 0 334z m558 0l335 0 0-334q0-140-98-238t-237-97l0 111q92 0 158 65t65 159l-223 0 0 334z" fill="var(--grey)"/></g></svg> 3</span>
+      <span class="stat"><svg width="11.2" height="13" viewBox="0 150 860 850" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;flex-shrink:0"><g transform="scale(1,-1) translate(0,-850)"><path d="M790 644q70-64 70-156t-70-158l-360-330-360 330q-70 66-70 158t70 156q62 58 151 58t153-58l56-52 58 52q62 58 150 58t152-58z" fill="var(--grey)"/></g></svg> 2</span>
+      <span class="stat"><svg width="8.8" height="13" viewBox="0 150 680 850" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;flex-shrink:0"><g transform="scale(1,-1) translate(0,-850)"><path d="M180 516l0-538-180 0 0 538 180 0z m250-138l0-400-180 0 0 400 180 0z m250 344l0-744-180 0 0 744 180 0z" fill="var(--grey)"/></g></svg> 11,691</span>
+      
+      <span class="source">Web App</span>
+    </div>
+  </div>
+</div></div>
+</body></html>
