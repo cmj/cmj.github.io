@@ -16,7 +16,7 @@
     // Point this at wherever the raw SVG is actually served from.
     const SVG_URL = "https://scrobbler-psi.vercel.app/api/proxy?_=" + Date.now();
 
-    const REMOVE_EQUALIZER = false; // true = delete bars, false = freeze them
+    const REMOVE_EQUALIZER = true; // true = delete bars, false = freeze them
 
     fetch(SVG_URL, { cache: "no-store" })
       .then((res) => {
