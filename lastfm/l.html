@@ -4,20 +4,52 @@
   <title>scrobbler</title>
   <meta http-equiv="refresh" content="180" />
   <style>
-    html, body { margin: 0; background-color: #212121; overflow: hidden; }
-    iframe {
-      border: none;
-      display: block;
-      overflow: hidden;
-    }
+    * { background-color: #212121; }
+    html, body { margin: 0; overflow: hidden; }
+    #svg-container svg { display: block; }
   </style>
 </head>
 <body>
-  <iframe
-    width="406"
-    height="585"
-    scrolling="no"
-    src="https://pi.gs/fm/scrobbles-static.html">
-  </iframe>
+  <div id="svg-container" style="width:396px;height:575px;"></div>
+
+  <script>
+    // Point this at wherever the raw SVG is actually served from.
+    const SVG_URL = "https://scrobbler-psi.vercel.app/api/proxy?_=" + Date.now();
+
+    const REMOVE_EQUALIZER = false; // true = delete bars, false = freeze them
+
+    fetch(SVG_URL, { cache: "no-store" })
+      .then((res) => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.text();
+      })
+      .then((svgText) => {
+        const container = document.getElementById("svg-container");
+        container.innerHTML = svgText;
+
+        const svg = container.querySelector("svg");
+        if (!svg) return;
+
+        svg.querySelectorAll("style").forEach((styleEl) => {
+          styleEl.textContent = styleEl.textContent
+            .replace(/@keyframes[\s\S]*?\{[\s\S]*?\{[\s\S]*?\}[\s\S]*?\}/g, "")
+            .replace(/animation:\s*[^;]+;?/g, "animation: none;");
+        });
+
+        const bars = svg.querySelectorAll(".lfmrbdaln-eq");
+        if (REMOVE_EQUALIZER) {
+          bars.forEach((bar) => bar.remove());
+        } else {
+          bars.forEach((bar) => {
+            bar.style.animation = "none";
+            bar.style.transform = "scaleY(1)";
+          });
+        }
+      })
+      .catch((err) => {
+        document.getElementById("svg-container").textContent =
+          "Failed to load SVG: " + err.message;
+      });
+  </script>
 </body>
 </html>
